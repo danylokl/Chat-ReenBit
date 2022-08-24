@@ -13,6 +13,7 @@ namespace DataBase.Models
     public class Chat
     {
         public int ChatId { get; set; }
+        public string ChatName { get; set; }
         public ChatType ChatType { get; set; }
         public virtual ICollection<User> Users { get; set; }
         public virtual ICollection<Message> Messages { get; set; }

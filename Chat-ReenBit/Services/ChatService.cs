@@ -1,6 +1,6 @@
 ﻿using DataBase.Models;
 
-namespace Test_Task_ReenBit.Services
+namespace Chat_ReenBit.Services
 {
     public class ChatService
     {

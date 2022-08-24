@@ -4,7 +4,9 @@
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+            //Context context = new Context();
+            //context.Database.EnsureDeleted();
+            //context.Database.EnsureCreated();
         }
     }
 }

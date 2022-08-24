@@ -18,14 +18,13 @@ namespace DataBase
             //context.Database.EnsureDeleted();
             _context = context;
 
-            context.Database.EnsureCreated();
+            //context.Database.EnsureCreated();
 
             DbSet = _context.Set<T>();
         }
         public async Task<List<T>> GetAllAsync()
         {
             var result = await DbSet.ToListAsync();
-
             return result;
         }
 

@@ -26,12 +26,14 @@ namespace DataBase
                          new Chat()
                          {
                              ChatId = 1,
+                             ChatName="TestGroupChat",
                              ChatType = ChatType.PersonalChat
           
                          },
                          new Chat()
                          { ChatId=2,
-                         ChatType=ChatType.GroupChat});
+                         ChatType=ChatType.GroupChat,
+                         ChatName="PersonalChat"});
 
             modelBuilder.Entity<Message>().HasData(
                 new Message() { MessageId = 1, SendTime = DateTime.Now, ChatId = 1, UserName = "FirstUser", Text = "message from first user in personal chat", Visibility = Visibility.Everyone });

@@ -1,6 +1,6 @@
 ﻿using DataBase.Models;
 
-namespace Test_Task_ReenBit.Services
+namespace Chat_ReenBit.Services
 {
     public class MessageService
     {
@@ -31,11 +31,23 @@ namespace Test_Task_ReenBit.Services
         }
         public async Task CreateMessage(Message message)
         {
-            await _messageRepository.Create(message);
+await _messageRepository.Create(message);
         }
         public async Task UpdateMessage(Message message)
         {
             await _messageRepository.Update(message);
+        }
+        public async Task UpdateMessageText(Message data)
+        {
+           var message= await _messageRepository.GetByIdAsync(data.MessageId);
+            message.Text = data.Text;
+            await _messageRepository.SaveChanges();
+        }
+        public async Task DeleteForSender(Message data)
+        {
+            var message = await _messageRepository.GetByIdAsync(data.MessageId);
+            message.Visibility = Visibility.EveryoneNoSender;
+            await _messageRepository.SaveChanges();
         }
         public async Task SaveChanges()
         {

@@ -1,14 +1,16 @@
-﻿using DataBase.Models;
+﻿using Chat_ReenBit.Models;
+using DataBase.Models;
 
 namespace Test_Task_ReenBit.Models
 {
     public class ChatViewModel
     { public int ChatId { get; set; }
-       public List<MessageDto> Messages { get; set; }
+        public string ChatName { get; set; }
+       public List<MessageClientDto> Messages { get; set; }
         
         public static ChatViewModel ToViewModel(Chat chat)
         {
-            return new ChatViewModel() { ChatId=chat.ChatId, Messages=chat.Messages.Select(p=>MessageDto.ToDtoModel(p)).ToList()};
+            return new ChatViewModel() { ChatId=chat.ChatId,ChatName=chat.ChatName, Messages=chat.Messages.Select(p=> MessageClientDto.ToDto(p)).ToList()};
 
         }
     }

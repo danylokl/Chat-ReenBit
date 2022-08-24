@@ -1,8 +1,14 @@
 using DataBase;
 using DataBase.Models;
 using Microsoft.EntityFrameworkCore;
-using Test_Task_ReenBit.Services;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Chat_ReenBit.ChatHub;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
+using Chat_ReenBit.Identity;
+using Microsoft.AspNetCore.Identity;
+using Chat_ReenBit.Services;
+
+
 namespace Chat_ReenBit
 {
     public class Program
@@ -11,18 +17,31 @@ namespace Chat_ReenBit
         {
             var builder = WebApplication.CreateBuilder(args);
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+            var identityconnectionString = builder.Configuration.GetConnectionString("IdentityConnection");
             // Add services to the container.
             builder.Services.AddScoped<UserService>();
             builder.Services.AddScoped<ChatService>();
             builder.Services.AddScoped<MessageService>();
+            builder.Services.AddScoped<MessageHub>();
             builder.Services.Add(ServiceDescriptor.Scoped(typeof(IRepository<>), typeof(ChatRepository<>)));
+            builder.Services.AddCors();
+            builder.Services.AddDbContext<IdentityContext>(options =>
+             options.UseSqlServer(identityconnectionString));
             builder.Services.AddDbContext<Context>(options =>
              options.UseSqlServer(connectionString));
+
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<IdentityContext>();
+            builder.Services.AddSignalR();
+
+            builder.Services.AddAuthentication();
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-
+            builder.Services.ConfigureApplicationCookie(option =>
+            {
+                option.Cookie.SameSite = SameSiteMode.None;
+            });
             var app = builder.Build();
             app.UseStaticFiles();
             // Configure the HTTP request pipeline.
@@ -33,12 +52,12 @@ namespace Chat_ReenBit
             }
 
             app.UseHttpsRedirection();
-            app.UseCors(policy => policy.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod());
-            app.UseAuthorization();
+            app.UseCors(policy => policy.AllowAnyHeader().AllowAnyMethod().SetIsOriginAllowed(origin => true).AllowCredentials());
             
-
+            app.UseAuthentication();
+app.UseAuthorization();
             app.MapControllers();
-
+            app.MapHub<MessageHub>("/chatHub");
             app.Run();
         }
     }
