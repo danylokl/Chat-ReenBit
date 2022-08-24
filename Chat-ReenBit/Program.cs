@@ -25,6 +25,7 @@ namespace Chat_ReenBit
             builder.Services.AddScoped<MessageHub>();
             builder.Services.Add(ServiceDescriptor.Scoped(typeof(IRepository<>), typeof(ChatRepository<>)));
             builder.Services.AddCors();
+
             builder.Services.AddDbContext<IdentityContext>(options =>
              options.UseSqlServer(identityconnectionString));
             builder.Services.AddDbContext<Context>(options =>
@@ -35,7 +36,6 @@ namespace Chat_ReenBit
 
             builder.Services.AddAuthentication();
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.ConfigureApplicationCookie(option =>
@@ -53,9 +53,8 @@ namespace Chat_ReenBit
 
             app.UseHttpsRedirection();
             app.UseCors(policy => policy.AllowAnyHeader().AllowAnyMethod().SetIsOriginAllowed(origin => true).AllowCredentials());
-            
             app.UseAuthentication();
-app.UseAuthorization();
+            app.UseAuthorization();
             app.MapControllers();
             app.MapHub<MessageHub>("/chatHub");
             app.Run();

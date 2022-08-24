@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.SignalR;
 
 namespace Chat_ReenBit.ChatHub
 {
-    public class MessageHub:Hub<IMessageHub>
+    public class MessageHub : Hub<IMessageHub>
     {
         protected IHubContext<MessageHub> hubContext;
 
@@ -11,8 +11,11 @@ namespace Chat_ReenBit.ChatHub
         {
             this.hubContext = hubContext;
         }
-        
-        public async Task Send(List<MessageClientDto> data) =>
+
+        public async Task Send(List<MessageClientDto> data)
+        {
             await hubContext.Clients.All.SendAsync("messageData", data);
+
+        }
     }
 }

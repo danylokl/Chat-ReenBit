@@ -37,6 +37,7 @@ namespace Chat_ReenBit.Models
                 SendTime = DateTime.Parse(this.Sendtime),
                 MessageId = this.MessageId,
                 Visibility=this.Visibility, 
+                ReplyTo=this.ReplyTo
              
             };
         }

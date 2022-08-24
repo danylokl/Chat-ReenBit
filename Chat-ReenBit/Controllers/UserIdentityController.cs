@@ -31,25 +31,43 @@ namespace Chat_ReenBit.Controllers
 
         [HttpPost]
         [Route("/Logout")]
-        public async Task LogOut()
+        public async Task<IActionResult> LogOut()
         {
-            
-            await _signInManager.SignOutAsync();
+            try
+            {
+                await _signInManager.SignOutAsync();
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
         }
 
         [HttpGet]
         [Route("/Login/UserName")]
         public async Task<IActionResult> GetLoginedUserName()
         {
-            var result = await _userManager.GetUserAsync(HttpContext.User);
-            return Ok(result);
+            try
+            {
+                var result = await _userManager.GetUserAsync(HttpContext.User);
+
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+
+                return BadRequest(e);
+            }
+
+
         }
 
         [HttpGet]
         [Route("/Login/[action]")]
         public async Task<IActionResult> CheckIfAuthenticated()
         {
-            
+
             var result = (HttpContext.User != null) && HttpContext.User.Identity.IsAuthenticated;
 
             return Ok(result);

@@ -18,7 +18,7 @@ namespace DataBase
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<User>().HasData(
-                new User() { UserId = 1, UserName = "FirstUser" },
+               new User() { UserId = 1, UserName = "FirstUser" },
                new User() { UserId = 2, UserName = "SecondUser" },
                new User() { UserId = 3, UserName = "ThirdUser" });
 
@@ -26,14 +26,16 @@ namespace DataBase
                          new Chat()
                          {
                              ChatId = 1,
-                             ChatName="TestGroupChat",
+                             ChatName = "TestGroupChat",
                              ChatType = ChatType.PersonalChat
-          
+
                          },
                          new Chat()
-                         { ChatId=2,
-                         ChatType=ChatType.GroupChat,
-                         ChatName="PersonalChat"});
+                         {
+                             ChatId = 2,
+                             ChatType = ChatType.GroupChat,
+                             ChatName = "PersonalChat"
+                         });
 
             modelBuilder.Entity<Message>().HasData(
                 new Message() { MessageId = 1, SendTime = DateTime.Now, ChatId = 1, UserName = "FirstUser", Text = "message from first user in personal chat", Visibility = Visibility.Everyone });
@@ -60,6 +62,6 @@ namespace DataBase
         public DbSet<User> Users { get; set; }
         public DbSet<Chat> Chats { get; set; }
         public DbSet<Message> Messages { get; set; }
-        
+
     }
 }

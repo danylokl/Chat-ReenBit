@@ -39,7 +39,7 @@ await _messageRepository.Create(message);
         }
         public async Task UpdateMessageText(Message data)
         {
-           var message= await _messageRepository.GetByIdAsync(data.MessageId);
+            var message= await _messageRepository.GetByIdAsync(data.MessageId);
             message.Text = data.Text;
             await _messageRepository.SaveChanges();
         }
