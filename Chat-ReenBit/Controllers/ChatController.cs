@@ -119,7 +119,7 @@ namespace Chat_ReenBit.Controllers
                     ChatId = messageDto.ChatId,
                     UserName = user.UserName,
                     Text = messageDto.Text,
-                    SendTime = DateTime.Parse(messageDto.Sendtime),
+                    SendTime = DateTime.Now,
                     Visibility = Visibility.Everyone,
                     ReplyTo = messageDto.ReplyTo,
                 };
