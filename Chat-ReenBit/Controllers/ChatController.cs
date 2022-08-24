@@ -31,7 +31,7 @@ namespace Chat_ReenBit.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        //[Authorize]
         [Route("[action]")]
         public async Task<IActionResult> Index()
         {
@@ -45,7 +45,7 @@ namespace Chat_ReenBit.Controllers
             catch (Exception e)
             {
 
-                return BadRequest(e);
+                return BadRequest();
             }
         }
 
@@ -119,7 +119,7 @@ namespace Chat_ReenBit.Controllers
                     ChatId = messageDto.ChatId,
                     UserName = user.UserName,
                     Text = messageDto.Text,
-                    SendTime = DateTime.Now,
+                    SendTime = DateTime.Parse(messageDto.Sendtime),
                     Visibility = Visibility.Everyone,
                     ReplyTo = messageDto.ReplyTo,
                 };
@@ -138,6 +138,7 @@ namespace Chat_ReenBit.Controllers
                 return BadRequest(e);
             }
         }
+
         [HttpPut]
         [Route("[action]")]
         public async Task<IActionResult> EditMessage([FromBody] MessageClientDto messageDto)
@@ -196,6 +197,24 @@ namespace Chat_ReenBit.Controllers
             {
 
                 return BadRequest(e);
+            }
+        }
+        [HttpGet]
+        [Route("[action]")]
+        public async Task<IActionResult> GetUserChats()
+        {
+            
+            try
+            {
+                    var usercontext = await _userManager.GetUserAsync(HttpContext.User);
+                var chats = await _chatService.GetAllChatsAsync();
+                var result = chats.Where(p => p.Users.Any(a => a.UserName == usercontext.UserName)).ToList();
+                return Ok(result);
+            }
+            catch (Exception)
+            {
+
+                return BadRequest();
             }
         }
     }

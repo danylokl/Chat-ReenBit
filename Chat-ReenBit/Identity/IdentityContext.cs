@@ -11,6 +11,10 @@ namespace Chat_ReenBit.Identity
             //Database.EnsureDeleted();
             Database.EnsureCreated();
         }
+        //public IdentityContext()
+        //{
+
+        //}
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

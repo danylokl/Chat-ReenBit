@@ -60,7 +60,6 @@ namespace Chat_ReenBit.Controllers
                 return BadRequest(e);
             }
 
-
         }
 
         [HttpGet]

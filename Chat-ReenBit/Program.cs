@@ -16,8 +16,8 @@ namespace Chat_ReenBit
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-            var identityconnectionString = builder.Configuration.GetConnectionString("IdentityConnection");
+            var connectionString = builder.Configuration.GetConnectionString("Azure_chatdata_Connection");
+            var identityconnectionString = builder.Configuration.GetConnectionString("Azure_chat_Connection");
             // Add services to the container.
             builder.Services.AddScoped<UserService>();
             builder.Services.AddScoped<ChatService>();
@@ -50,7 +50,7 @@ namespace Chat_ReenBit
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-
+  
             app.UseHttpsRedirection();
             app.UseCors(policy => policy.AllowAnyHeader().AllowAnyMethod().SetIsOriginAllowed(origin => true).AllowCredentials());
             app.UseAuthentication();
