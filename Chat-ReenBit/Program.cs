@@ -31,9 +31,19 @@ namespace Chat_ReenBit
             builder.Services.AddDbContext<Context>(options =>
              options.UseSqlServer(connectionString));
 
+            builder.Services.AddSpaStaticFiles(configuration =>
+                {
+                    configuration.RootPath = "ClientApp/dist/chat-reenbit";
+                });
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<IdentityContext>();
             builder.Services.AddSignalR();
-
+            builder.Services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+            {
+                builder.SetIsOriginAllowed(origin=>true)
+                       .AllowAnyMethod()
+                       .AllowAnyHeader()
+                       .AllowCredentials();
+            }));
             builder.Services.AddAuthentication();
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
@@ -50,9 +60,13 @@ namespace Chat_ReenBit
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-  
+            app.UseSpa(spa =>
+            {
+                spa.Options.SourcePath = "ClientApp";
+                spa.UseAngularCliServer(npmScript: "start");
+            });
             app.UseHttpsRedirection();
-            app.UseCors(policy => policy.AllowAnyHeader().AllowAnyMethod().SetIsOriginAllowed(origin => true).AllowCredentials());
+            app.UseCors("MyPolicy");
             app.UseAuthentication();
             app.UseAuthorization();
             app.MapControllers();
