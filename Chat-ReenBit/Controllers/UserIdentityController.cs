@@ -36,6 +36,7 @@ namespace Chat_ReenBit.Controllers
             try
             {
                 await _signInManager.SignOutAsync();
+             
                 return Ok();
             }
             catch (Exception e)

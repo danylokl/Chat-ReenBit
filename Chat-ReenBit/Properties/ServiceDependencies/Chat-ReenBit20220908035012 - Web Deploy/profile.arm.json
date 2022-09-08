@@ -21,7 +21,7 @@
     },
     "resourceName": {
       "type": "string",
-      "defaultValue": "Chat-ReenBit",
+      "defaultValue": "Chat-ReenBit20220908035012",
       "metadata": {
         "description": "Name of the main resource to be created by this template."
       }
